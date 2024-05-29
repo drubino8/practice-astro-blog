@@ -1,0 +1,33 @@
+---
+// Static Variable
+const siteName = 'Digital Garden';
+
+// Destructured Props
+const { pageTitle } = Astro.props;
+
+// Get (fetch) All Posts
+const allPosts = await Astro.glob('../pages/posts/*.md');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{siteName} | {pageTitle}</title>
+	</head>
+	<body>
+		<slot />
+
+        <!-- Get All Posts -->
+        {
+            allPosts.map( post => 
+                <p>
+                    <a href={post.url}>{post.frontmatter.title}</a>
+                </p>
+            )
+        }
+
+	</body>
+</html>
